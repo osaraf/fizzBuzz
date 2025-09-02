@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.Consumer;
 
 public class FizzBuzz {
 
@@ -10,9 +11,10 @@ public class FizzBuzz {
         rules.put(5, "Buzz");
     }
 
-    public void addRule(int divisor, String word) {
+    public FizzBuzz  addRule(int divisor, String word) {
         if (divisor == 0) throw new IllegalArgumentException("Divisor must not be zero");
         rules.put(divisor, Objects.requireNonNull(word, "word"));
+        return this;
     }
 
     public String evaluate(int number) {
@@ -34,6 +36,16 @@ public class FizzBuzz {
         List<String> out = new ArrayList<>(end - start + 1);
         for (int i = start; i <= end; i++) out.add(evaluate(i));
         return out;
+    }
+
+    /**
+     * Computes FizzBuzz for [start, end] and passes each line to the given sink.
+     * Useful to print to console, write to a file, or log without changing core logic.
+     */
+    public void run(int start, int end, Consumer<String> sink) {
+        for (String s : run(start, end)) {
+            sink.accept(s);
+        }
     }
 
     @Override
