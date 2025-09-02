@@ -1,0 +1,36 @@
+name: Java CI (no build tool)
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download JUnit Console
+        run: |
+          curl -L -o junit.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar
+
+      - name: Compile main sources
+        run: |
+          mkdir -p out
+          find src -name "*.java" > sources-main.txt
+          if [ -s sources-main.txt ]; then
+            javac -encoding UTF-8 -d out @sources-main.txt
+          fi
+
+      - name: Compile test sources  with JUnit on classpath
+        run: |
+          find test -name "*.java" > sources-test.txt
+          if [ -s sources-test.txt ]; then
+            javac -encoding UTF-8 -cp junit.jar:out -d out @sources-test.txt
+          fi
+
+      - name: Run tests
+        run: |
+          java -jar junit.jar -cp out --scan-class-path

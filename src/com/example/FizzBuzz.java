@@ -1,3 +1,5 @@
+package com.example;
+
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -39,7 +41,7 @@ public class FizzBuzz {
     }
 
     /**
-     * Computes FizzBuzz for [start, end] and passes each line to the given sink.
+     * Computes com.example.FizzBuzz for [start, end] and passes each line to the given sink.
      * Useful to print to console, write to a file, or log without changing core logic.
      */
     public void run(int start, int end, Consumer<String> sink) {
@@ -50,7 +52,7 @@ public class FizzBuzz {
 
     @Override
     public String toString() {
-        return "FizzBuzz{" +
+        return "com.example.FizzBuzz{" +
                 "rules=" + rules +
                 '}';
     }

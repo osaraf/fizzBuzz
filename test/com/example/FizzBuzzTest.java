@@ -1,3 +1,6 @@
+package com.example;
+
+import com.example.FizzBuzz;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ class FizzBuzzTest {
         assertEquals("1", fb.evaluate(1));
         assertEquals("Fizz", fb.evaluate(3));
         assertEquals("Buzz", fb.evaluate(5));
-        assertEquals("FizzBuzz", fb.evaluate(15));
+        assertEquals("com.example.FizzBuzz", fb.evaluate(15));
     }
 
     @Test
