@@ -1,5 +1,4 @@
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FizzBuzz {
 
@@ -12,11 +11,13 @@ public class FizzBuzz {
     }
 
     public void addRule(int divisor, String word) {
-        rules.put(divisor, word);
+        if (divisor == 0) throw new IllegalArgumentException("Divisor must not be zero");
+        rules.put(divisor, Objects.requireNonNull(word, "word"));
     }
 
     public String evaluate(int number) {
         StringBuilder result = new StringBuilder();
+
 
         for (Map.Entry<Integer, String> entry : rules.entrySet()) {
             if (number % entry.getKey() == 0) {
@@ -27,10 +28,12 @@ public class FizzBuzz {
         return result.isEmpty() ? String.valueOf(number) : result.toString();
     }
 
-    public void run(int start, int end) {
-        for (int i = start; i <= end; i++) {
-            System.out.println(evaluate(i));
-        }
+    // returns the outputs
+    public List<String> run(int start, int end) {
+        if (end < start) throw new IllegalArgumentException("end must be >= start");
+        List<String> out = new ArrayList<>(end - start + 1);
+        for (int i = start; i <= end; i++) out.add(evaluate(i));
+        return out;
     }
 
     @Override
